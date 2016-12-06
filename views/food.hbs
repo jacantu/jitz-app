@@ -1,0 +1,24 @@
+{{> header }}
+{{> menumenu }}
+
+<title>Food Items</title>
+<div>
+  <p>Here are our food items!</p>
+</div>
+<div class="row">
+
+{{# each Product }}
+    <div class="col-md-4 ">
+        <div class="thumbnail">
+            <img src="{{ this.imagePath }}" alt="..." class="img-responsive">
+            <div class="caption">
+                  <a href="item/{{this.title}}"><h3>{{ this.title }}</h3></a>
+                <div class="small_description">{{ this.description }}</div>
+              
+            </div>
+        </div>
+    </div>
+{{/each}}
+</div>
+
+{{> footer }}
