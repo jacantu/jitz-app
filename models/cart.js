@@ -8,9 +8,9 @@ module.exports = function Cart(oldCart) {
     this.totalPrice = Number(oldCart.totalPrice) || 0;
 
     /** Totals rounded two places after point */
-    this.subTotalPrice = Math.round(Number(this.subTotal) * Math.pow(10, 2))/Math.pow(10, 2);
-    this.totalTaxPrice = Math.round(Number(this.totalTax) * Math.pow(10, 2))/Math.pow(10, 2);
-    this.grandTotalPrice = Math.round(Number(this.totalPrice) * Math.pow(10, 2))/Math.pow(10, 2);
+    this.subTotalPrice = Number(this.subTotal).toFixed(2);
+    this.totalTaxPrice = Number(this.totalTax).toFixed(2);
+    this.grandTotalPrice = Number(this.totalPrice).toFixed(2);
 
     this.add = function(item, id) {
         var storedItem = this.items[id];
@@ -21,7 +21,7 @@ module.exports = function Cart(oldCart) {
         }
 
 
-            /** Individual item price and rounds it to two digits after point*/
+            /** Individual item price * quantity of the same item*/
             storedItem.qty++;
             storedItem.price = Number(storedItem.item.price * storedItem.qty);
 
@@ -29,7 +29,7 @@ module.exports = function Cart(oldCart) {
             this.totalQty++;
             this.subTotal += Number(storedItem.item.price);
             this.totalTax += Number(storedItem.item.price / 100 * 8.25);
-            this.totalPrice += Number(storedItem.item.price)+ (storedItem.item.price / 100 * 8.25);
+            this.totalPrice += Number(storedItem.item.price) + (storedItem.item.price / 100 * 8.25);
 
 
       };
@@ -61,7 +61,7 @@ module.exports = function Cart(oldCart) {
     this.removeItem = function(id) {
         this.subTotal -= Number(this.items[id].item.price * this.items[id].qty);
         this.totalTax -= Number(this.items[id].item.price * this.items[id].qty / 100 * 8.25);
-        this.totalPrice -= Number(this.items[id].item.price * this.items[id].qty) + (this.items[id].item.price  * this.items[id].qty / 100 * 8.25);
+        this.totalPrice -= Number(this.items[id].item.price * this.items[id].qty) + (this.items[id].item.price * this.items[id].qty / 100 * 8.25);
 
         this.totalQty -= this.items[id].qty;
         delete this.items[id];

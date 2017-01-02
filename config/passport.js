@@ -30,7 +30,7 @@ passport.use('local.signup', new LocalStrategy({
         });
         return done(null, false, req.flash('error', messages));
     }
-    /** Finds user if not creates one */
+    /** Finds user or creates one if not found*/
     User.findOne({'email': email}, function (err, user) {
         if (err) {
             return done(err);

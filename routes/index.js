@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var Product = require('../models/product');
@@ -98,7 +99,7 @@ router.get('/checkout', isLoggedIn, function(req, res, next) {
     }
     var cart = new Cart(req.session.cart);
     var errMsg = req.flash('error')[0];
-    res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
+    res.render('shop/checkout', {total: cart.grandTotalPrice, errMsg: errMsg, noError: !errMsg});
 });
 
 router.post('/checkout', isLoggedIn, function(req, res, next) {
@@ -108,7 +109,7 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
     var cart = new Cart(req.session.cart);
     var stripe = require("stripe")(process.env.SECRET_TEST_KEY);
     stripe.charges.create({
-        amount: cart.totalPrice * 100,
+        amount: cart.grandTotalPrice * 100,
         currency: "usd",
         source: req.body.stripeToken,
         description: "Test Charge"
